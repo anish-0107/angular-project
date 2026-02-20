@@ -61,7 +61,7 @@ For more information on using the Angular CLI, including detailed command refere
 
 //
 
-<!-- Router Event: NavigationStart
+Router Event: NavigationStart
 _router_module-chunk.mjs:1071 NavigationStart(id: 247, url: '/book/list')
 _router_module-chunk.mjs:1072 NavigationStart {id: 247, url: '/book/list', type: 0, navigationTrigger: 'imperative', restoredState: null}
 _router_module-chunk.mjs:1070 Router Event: RoutesRecognized
@@ -135,4 +135,4 @@ _router_module-chunk.mjs:1071 NavigationCancel(id: 249, url: '/book/list')
 _router_module-chunk.mjs:1072 NavigationCancel {id: 249, url: '/book/list', reason: 'NavigationCancelingError: Redirecting to "/book/list"', code: 0, type: 2}
 _router_module-chunk.mjs:1070 Router Event: NavigationStart
 _router_module-chunk.mjs:1071 NavigationStart(id: 250, url: '/book/list')
-_router_module-chunk.mjs:1072 NavigationStart {id: 250, url: '/book/list', type: 0, navigationTrigger: 'imperative', restoredState: null} -->
+_router_module-chunk.mjs:1072 NavigationStart {id: 250, url: '/book/list', type: 0, navigationTrigger: 'imperative', restoredState: null}
