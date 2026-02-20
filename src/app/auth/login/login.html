@@ -1,0 +1,31 @@
+
+<div class="auth-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome Back</h2>
+      <p>Please enter your details to sign in</p>
+    </div>
+
+    <div class="form-container">
+      <div class="input-group">
+        <label>Username</label>
+        <div class="input-wrapper">
+          <span class="icon">👤</span>
+          <input type="text" placeholder="Enter username" [(ngModel)]="username">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <span class="icon">🔒</span>
+          <input type="password" placeholder="Enter password" [(ngModel)]="password">
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-login" (click)="login()">Log In</button>
+      </div>
+    </div>
+  </div>
+</div>

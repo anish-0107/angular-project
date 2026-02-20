@@ -1,0 +1,102 @@
+.status-badge { font-weight: bold; padding: 4px 8px; border-radius: 4px; }
+.status-red { color: white; background-color: red; }
+.status-yellow { color: black; background-color: yellow; }
+.status-green { color: rgb(58, 90, 58);  }
+
+/* Container Grid */
+.issued-books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card Styling */
+.issue-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: transform 0.2s ease;
+}
+
+.issue-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.15rem;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.card-body p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #64748b;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-body p span {
+    font-weight: 600;
+    color: #475569;
+}
+
+.due-date {
+    margin-top: 12px !important;
+    padding-top: 10px;
+    border-top: 1px dashed #e2e8f0;
+    font-style: italic;
+}
+
+/* Status & Fine Styling */
+.status-badge {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fine-val.has-fine {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Button Group */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Pushes buttons to bottom */
+    padding-top: 15px;
+}
+
+.card-actions button {
+    flex: 1;
+    padding: 8px 5px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-return { background: #64748b; color: white; }
+.btn-renew { background: #3b82f6; color: white; }
+.btn-pay { background: #ef4444; color: white; }
+
+.card-actions button:hover {
+    opacity: 0.9;
+}
+
+/* Loading State */
+.loading-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}

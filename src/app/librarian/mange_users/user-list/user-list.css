@@ -1,0 +1,343 @@
+/* Container Layout */
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card Styling */
+.user-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.2s ease;
+    border: 1px solid #eee;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+/* Header & Badges */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: #ff4d4f;
+    color: white;
+}
+
+.status-badge.active {
+    background: #52c41a;
+}
+
+/* Body Text */
+.card-body p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.card-body strong {
+    color: #333;
+}
+
+/* Buttons */
+.card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.btn {
+    flex: 1;
+    border: none;
+    padding: 8px 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn-history { background: #1890ff; color: white; }
+.btn-save { background: #722ed1; color: white; }
+.btn-delete { background: #fff1f0; color: #ff4d4f; border: 1px solid #ffa39e; }
+
+/* Search Section */
+.search-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-top: 2px solid #eee;
+}
+
+.search-section input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.btn-search {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.search-results {
+    background: #222;
+    color: #00ff00;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    overflow-x: auto;
+}
+
+/* ---------- */
+.table-wrapper {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden; /* Keeps the corners rounded */
+    border: 1px solid #eef2f6;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate; /* Required for spacing */
+    border-spacing: 0;
+}
+
+/* Header Styling */
+thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 16px 20px; /* Horizontal gap between columns */
+    border-bottom: 2px solid #edf2f7;
+    text-align: left;
+}
+
+/* Row Styling */
+tbody td {
+    padding: 20px; /* This creates the "vertical" and "horizontal" gap */
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+    background-color: #ffffff;
+    transition: background-color 0.2s ease;
+}
+
+/* Hover Effect */
+tbody tr:hover td {
+    background-color: #f1f7ff; /* Soft blue highlight on hover */
+}
+
+/* Zebra Stripes (Optional but recommended) */
+tbody tr:nth-child(even) td {
+    background-color: #fcfdfe;
+}
+
+/* Adding specific width to columns to ensure balance */
+th:nth-child(1), td:nth-child(1) { width: 40%; } /* Book Details needs more space */
+th:nth-child(2), td:nth-child(2) { width: 25%; }
+th:nth-child(3), td:nth-child(3) { width: 20%; }
+th:nth-child(4), td:nth-child(4) { width: 15%; text-align: right; }
+
+/* Status Pill Polish */
+.status-pill {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+}
+
+/* Fine text alignment */
+.fine-text, .no-fine {
+    display: block;
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* 1. The Full-Screen Blurred Backdrop */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Darken background */
+    backdrop-filter: blur(8px);    /* The blur effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;                 /* Stay on top */
+    animation: fadeIn 0.3s ease;
+}
+
+/* 2. The Modal Card */
+.modal-content {
+    background: #ffffff;
+    width: 90%;
+    max-width: 850px;
+    max-height: 85vh;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 24px;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+/* 3. Header Styling */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #f0f2f5;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+}
+
+.header-title h2 {
+    margin: 0;
+    color: #1a3353;
+    font-size: 1.5rem;
+}
+
+.header-title p {
+    margin: 4px 0 0 0;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* 4. Close Button */
+.close-btn {
+    background: #f1f5f9;
+    border: none;
+    font-size: 1.8rem;
+    color: #64748b;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.close-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: rotate(90deg);
+}
+
+/* 5. Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* 6. Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+/* Specific width for the form modal */
+.form-modal {
+    max-width: 550px;
+}
+
+.styled-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.styled-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.styled-form input, 
+.styled-form select, 
+.styled-form textarea {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.styled-form input:focus {
+    border-color: #3b82f6;
+}
+
+.form-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.btn-save-final {
+    background: #2563eb;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-save-final:hover {
+    background: #1d4ed8;
+}

@@ -1,0 +1,48 @@
+@if(currentrole == 'user'){
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <h3>{{Book.title}}</h3>
+            <span class="book-id">ID: {{Book.id}}</span>
+        </div>
+        <p class="book-body">{{Book.body}}</p>  
+        <button (click)="borowBook()">borrow book</button> 
+    </div>
+</div>
+}
+
+
+@else {
+<div class="card-container">
+    <div class="card admin-border">
+        <div class="card-header">
+            <h3>{{Book.title}}</h3>
+            <span class="book-id">ID: {{Book.id}}</span>
+        </div>
+        <p class="book-body">{{Book.body | truncate }}</p>
+        <div class="admin-info">
+            <strong>Copies:</strong> {{Book.totalCopies}}
+        </div>
+        <div class="actions">
+            <button class="btn btn-delete" (click)="deleteme()">Delete</button>
+            <button class="btn btn-edit" (click)="showupdate()">Edit Book</button>
+        </div>
+    </div>
+</div>
+}
+
+@if(isShown){
+<div class="form-overlay">
+    <form class="update-form">
+        <h2>Update Book</h2>
+        <input type="text" placeholder="Title" [(ngModel)]="title" name="title">
+        <input type="text" placeholder="Body" [(ngModel)]="body" name="body">
+        <input type="text" placeholder="Category" [(ngModel)]="category" name="category">
+        <input type="text" placeholder="ISBN" [(ngModel)]="isbn" name="isbn">
+        <input type="number" placeholder="Total Copies" [(ngModel)]="totalCopies" name="totalCopies">
+        <input type="date" [(ngModel)]="publishedyear" name="publishedyear">
+        <button class="btn btn-update" (click)="updatebook()">Update Book</button>
+    </form>
+    <button (click)="showupdate()">exit</button>
+</div>
+}

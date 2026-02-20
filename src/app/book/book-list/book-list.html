@@ -1,0 +1,18 @@
+@if(isLoading){
+<app-loading-spinner [IsLoading]="isLoading"></app-loading-spinner>
+}
+@else{
+
+<select name="filter" id="filter" [(ngModel)]="selectedFilter" (change)="onFilterChange()">
+    <option value="all">All Books</option>
+    <option value="available">In stock books</option>
+</select>
+
+@for(b of books; track $index){
+    <div class="card-container">
+<app-book-card [Book]="b" (remove)="handleDelete($event)"></app-book-card>
+</div>
+}@empty {
+<p>noo books available</p>
+}
+}

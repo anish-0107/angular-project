@@ -1,0 +1,30 @@
+@if(role =="user"){
+<nav>
+    <div class="navbar">
+    <p>Library Manager</p>
+    </div>
+    <div class="links">
+    <a routerLink="book/list">ALL books</a>
+    <!-- <a routerLink="book/pbook/:id"> eachbooksindetails </a> -->
+    <a routerLink="auth/login">Login</a>
+    <a routerLink="auth/profile">Profile</a>
+    <a routerLink="/my-books"> my books</a>
+    <a routerLink="auth/register">register</a>
+
+    </div>
+</nav>
+}
+
+@else{
+<nav>
+    <div class="navbar">
+    <p>Library Manager</p>
+    </div>
+    <div class="links">
+        <a routerLink="librarian/dashboard">Dashboard</a>
+    <a routerLink="librarian/add">Add book</a>
+    <a routerLink="librarian/list">User list</a>
+    <a routerLink="auth/login">Login</a>
+    </div>
+</nav>
+}

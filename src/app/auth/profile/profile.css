@@ -1,0 +1,66 @@
+.profile-card {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+h2 { margin: 0; color: #333; font-size: 1.4rem; }
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  background: #ff7675;
+  color: white;
+}
+
+.status-badge.active { background: #55efc4; color: #00b894; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 15px;
+}
+
+.info-item label {
+  display: block;
+  font-size: 0.75rem;
+  color: #b2bec3;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.info-item p {
+  margin: 0;
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.fine { color: #d63031 !important; }
+
+.detail-btn {
+  width: 100%;
+  margin-top: 25px;
+  padding: 12px;
+  background: #0984e3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.detail-btn:hover { background: #74b9ff; }

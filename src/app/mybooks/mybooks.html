@@ -1,0 +1,72 @@
+<!-- @if(isloading){
+  <app-loading-spinner [IsLoading]="isloading"></app-loading-spinner>
+}
+
+@else{
+  @for(issu of issuedBook; track $index){
+    <div class="card">
+  <p>title:{{issu.book.title}}</p>
+  <p>issude by:{{issu.issuedBy}}</p>
+  <p>total fine:{{issu.fineAmount}}</p>
+
+
+<p>Current Status:
+  <strong [ngStyle]="{
+    'color': (issu | issueStatus) === 'OVERDUE' ? 'red' : 
+             (issu | issueStatus) === 'RETURNED' ? 'orange' : 'green'
+  }">
+    {{ issu | issueStatus }} </strong>
+</p>
+
+<p>Due Date: {{ issu.dueDate | date:'mediumDate' }}</p>
+  
+  <button (click)="returnBook(issu.id)">return</button>
+  <button (click)="renewBook(issu.id)">renew </button>
+  @if(issu.fineAmount >0){
+  <button (click)="payfineforIssue(issu.id)">pay fine</button>
+  }
+</div>
+  }
+} -->
+
+@if(isloading){
+  <div class="loading-wrapper">
+    <app-loading-spinner [IsLoading]="isloading"></app-loading-spinner>
+  </div>
+}
+
+@else{
+  <div class="issued-books-grid">
+    @for(issu of issuedBook; track $index){
+      <div class="issue-card">
+        <div class="card-header">
+          <h3>{{issu.book.title}}</h3>
+        </div>
+
+        <div class="card-body">
+          <p><span>Issued by:</span> {{issu.issuedBy}}</p>
+          <p><span>Total Fine:</span> <span class="fine-val" [class.has-fine]="issu.fineAmount > 0">${{issu.fineAmount}}</span></p>
+          
+          <p class="status-row">Current Status:
+            <strong class="status-badge" [ngStyle]="{
+              'color': (issu | issueStatus) === 'OVERDUE' ? '#e74c3c' : 
+                       (issu | issueStatus) === 'RETURNED' ? '#f39c12' : '#27ae60'
+            }">
+              {{ issu | issueStatus }}
+            </strong>
+          </p>
+
+          <p class="due-date">Due Date: {{ issu.dueDate | date:'mediumDate' }}</p>
+        </div>
+        
+        <div class="card-actions">
+          <button class="btn-return" (click)="returnBook(issu.id)">Return</button>
+          <button class="btn-renew" (click)="renewBook(issu.id)">Renew</button>
+          @if(issu.fineAmount > 0){
+            <button class="btn-pay" (click)="payfineforIssue(issu.id)">Pay Fine</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

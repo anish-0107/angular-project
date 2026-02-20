@@ -1,0 +1,173 @@
+
+@if(isLoading){
+    <div class="loading-container">
+        <app-loading-spinner [IsLoading]="isLoading"></app-loading-spinner>
+    </div>
+}
+@else {
+  <div class="search-section">
+        <input type="number" #userid placeholder="Enter User ID">
+        <button class="btn btn-search" (click)="getUsersById(userid.valueAsNumber)">Search User</button>
+        
+        @if(searchedUser) {
+            <pre class="search-results">{{searchedUser | json}}</pre>
+        }
+    </div>
+    <div class="user-grid">
+        @for(user of Users; track $index){
+            <div class="user-card">
+                <div class="card-header">
+                    <h3>{{user.fullName}}</h3>
+                    <span class="status-badge" [class.active]="user.isActive">
+                        {{user.isActive ? 'Active' : 'Inactive'}}
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <p><strong>Email:</strong> {{user.email}}</p>
+                    <p><strong>Phone:</strong> {{user.phone}}</p>
+                    <p><strong>Books:</strong> {{user.currentBooksCount}}</p>
+                    <p><strong>username</strong> {{user.username}}</p>
+                    <p><strong>Joined:</strong> {{user.joinDate | date:'mediumDate'}}</p>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-history" (click)="getBorrwingHis(user.id)">History</button>
+                    <button class="btn btn-save" (click)="updateUserForm(user.id)">Update user</button>
+                    <button class="btn btn-delete" (click)="deleteUser(user.id)">Delete</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <ng-template #historyTemp>
+    <div class="history-header">
+        <div class="header-title">
+            <h2>Borrowing History</h2>
+            <p>User ID: {{selectedUserHistory![0]?.userId}}</p>
+        </div>
+        <button class="close-btn" (click)="closeHistory()">&times;</button>
+    </div>
+    
+    <div class="history-body">
+        @if(selectedUserHistory && selectedUserHistory.length > 0) {
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book Details</th>
+                            <th>Issued / Due</th>
+                            <th>Status</th>
+                            <th>Fine</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(item of selectedUserHistory; track item.id) {
+                            <tr>
+                                <td>
+                                    <div class="book-info">
+                                        <span class="book-title">{{item.book?.title}}</span>
+                                        <span class="book-author">by {{item.book?.author}}</span>
+                                        <!-- <small class="isbn">ISBN: {{item.book?.isbn}}</small> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-stack">
+                                        <span><strong>Out:</strong> {{item.issueDate | date:'shortDate'}}</span>
+                                        <!-- <span [class.overdue]="item.status === 'overdue'"> -->
+                                            <strong>Due:</strong> {{item.dueDate | date:'shortDate'}}
+                                        <!-- </span> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-pill" [attr.data-status]="item.status">
+                                        {{item.status | uppercase}}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if(item.fineAmount > 0) {
+                                        <span class="fine-text" [class.paid]="item.finePaid">
+                                            ${{item.fineAmount}}
+                                        </span>
+                                    } @else {
+                                        <span class="no-fine">--</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        } @else {
+            <div class="empty-state">
+                <p>No records found for this user.</p>
+            </div>
+        }
+    </div>
+</ng-template>
+
+@if(selectedUserHistory){
+  <div class="modal-backdrop" (click)="closeHistory()">
+        
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            
+            <ng-container [ngTemplateOutlet]="historyTemp"></ng-container>
+            
+        </div>
+    </div>
+}
+
+}
+@if(selectedUserForEdit) {
+    <div class="modal-backdrop" (click)="closeEditModal()">
+        <div class="modal-content form-modal" (click)="$event.stopPropagation()">
+            <ng-container [ngTemplateOutlet]="editUserTemp"></ng-container>
+        </div>
+    </div>
+}
+
+<ng-template #editUserTemp>
+  <div class="edit-header">
+    <h2>Edit User Details</h2>
+    <button class="close-btn" (click)="closeEditModal()">&times;</button>
+  </div>
+
+  <form #userForm="ngForm" class="styled-form">
+    <div class="form-grid">
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" name="fullName" [(ngModel)]="selectedUserForEdit.fullName">
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" name="email" [(ngModel)]="selectedUserForEdit.email">
+      </div>
+
+      <div class="input-group">
+        <label>Phone</label>
+        <input type="text" name="phone" [(ngModel)]="selectedUserForEdit.phone">
+      </div>
+
+      <div class="input-group">
+        <label>Role</label>
+        <select name="role" [(ngModel)]="selectedUserForEdit.role">
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+          <option value="librarian">Librarian</option>
+        </select>
+      </div>
+    </div>
+
+    <label>Address</label>
+    <textarea name="address" [(ngModel)]="selectedUserForEdit.address"></textarea>
+
+    <div class="form-footer">
+      <div class="checkbox-group">
+        <input type="checkbox" name="isActive" [(ngModel)]="selectedUserForEdit.isActive">
+        <label>Is Active</label>
+      </div>
+      <button type="button" class="btn-save-final" (click)="updateUser()">Save Changes</button>
+    </div>
+  </form>
+</ng-template>

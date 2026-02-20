@@ -1,0 +1,70 @@
+
+<!-- <p>{{userdata | json}}</p> -->
+
+<!-- <div class="profile-container">
+  <div class="profile-card">
+    <h2>Library Member Profile</h2>
+    
+    <div class="info-section">
+      <p class="label">Member ID</p>
+      <p class="value">#{{}}</p>
+    </div>
+
+    <div class="data-dump">
+      <p class="label">Raw User Data</p>
+      <pre>{{userdata | json}}</pre> 
+    </div>
+
+    <button class="action-btn" (click)="getprofile()">
+      🔍 See Book Details
+    </button>
+  </div>
+</div> -->
+
+@if(userdata){
+<div class="profile-card">
+  <div class="header">
+    <h2>{{userdata.fullName}}</h2>
+    <span class="status-badge" [class.active]="userdata.isActive">
+      {{ userdata.isActive ? 'Active' : 'Inactive' }}
+    </span>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <label>Email</label>
+      <p>{{userdata.email}}</p>
+    </div>
+    
+    <div class="info-item">
+      <label>Phone</label>
+      <p>{{userdata.phone}}</p>
+    </div>
+
+    <div class="info-item">
+      <label>Address</label>
+      <p>{{userdata.address}}</p>
+    </div>
+
+    <div class="info-item">
+      <label>Books Limit</label>
+      <p>{{userdata.currentBooksCount}} / {{userdata.maxBooksAllowed}}</p>
+    </div>
+
+    <div class="info-item">
+      <label>Fines Due</label>
+      <p class="fine">${{userdata.totalFines}}</p>
+    </div>
+
+    <div class="info-item">
+      <label>Membership Ends</label>
+      <p>{{userdata.membershipExpiry | date}}</p>
+    </div>
+  </div>
+
+  <button class="detail-btn" (click)="getprofile()">See Book Details</button>
+</div>
+}
+@else {
+  <app-loading-spinner [IsLoading]="isloading" ></app-loading-spinner>
+}

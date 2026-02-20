@@ -1,0 +1,14 @@
+<p>book-form works!</p>
+
+
+<form>
+    <input type="text" placeholder="title" [(ngModel)]="title" name="title">
+    <input type="text" placeholder="body" [(ngModel)]="body" name="body">
+    <input type="text" placeholder="category" [(ngModel)]="category" name="category">
+    <input type="text" placeholder="isnb" [(ngModel)]="isbn" name="isbn">
+    <input type="number" placeholder="totalCopies" [(ngModel)]="totalCopies" name="totalCopies">
+    <input type="date" placeholder="enter name" [(ngModel)]="publishedyear" name="publishedyear">
+    <button (click)="addBook()">Add book</button>
+</form>
+
+<!-- <button (click)="showfrom()">add from</button> -->
