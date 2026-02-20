@@ -9,7 +9,7 @@ import { ErrorInterceptor } from './auth/interceptors/error-interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+
     provideHttpClient(
       withInterceptorsFromDi(),
       withInterceptors([authInterceptor])

@@ -4,7 +4,7 @@ import { librarianGuard } from '../auth/guards/librarian-guard';
 export const BOOK_ROUTES: Routes = [
     // this all route are forwaek to books  eg. book/details
   {
-    path: '', 
+    path: 'lists', 
     loadComponent: () => import('./book-list/book-list').then(m => m.BookList)
   },
   {

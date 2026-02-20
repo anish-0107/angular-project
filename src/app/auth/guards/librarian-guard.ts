@@ -10,8 +10,6 @@ export const librarianGuard: CanActivateFn = (route, state) => {
     return true
   }
   else{
-    router.navigate(['/book/list']),
-    {ɵnormalizeQueryParams:{returnurl:state.url}}
-    return false
+  return router.createUrlTree(['/book/list'])
   }
 };
