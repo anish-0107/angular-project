@@ -1,58 +1,57 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../auth-service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login{
-  username:string=''
-  password:string=''
+export class Login implements OnInit {
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+  username: string = ''
+  password: string = ''
   private authserv = inject(AuthService)
   private route = inject(Router)
+  private cdr = inject(ChangeDetectorRef)
 
-  isLoggedin!:boolean
+  isLoggedin!: boolean
+  private fb = inject(FormBuilder);
+  // Define the form variable
+  loginForm!: FormGroup;
 
-  login(){
-     this.authserv.login(this.username,this.password).subscribe({
-      next:(data) =>{
-        console.log("logged in", data)
-        if(data.user.role == "librarian"){
-          this.route.navigate(['/librarian/dashboard'])
+
+
+  login() {
+    if (this.loginForm.valid) {    
+    const { username, password } = this.loginForm.value;
+    this.authserv.login(username, password).subscribe({
+      next: (data) => {
+        console.log("logged in", data);
+        if (data.user.role === "librarian") {
+          this.route.navigate(['/librarian/dashboard']);
+          this.cdr.detectChanges()
+        } else {
+          this.route.navigate(["/book/list"]);
+          this.cdr.detectChanges();
         }
-        else{
-        this.route.navigate(["/book/list"])
-        }
-      },
-      error:(err)=>{
-        console.log(err,'err occured');
-        }
-      })
-  }
-
-  
-
-  logout(){
-    this.authserv.logout().subscribe({
-      next:(data) =>{
-        console.log("logut success", data); 
       },
       error: (err) => {
-      console.error("Logout error (likely expired token)", err);
-      // Even if the server fails, the Service 'finalize' cleared the storage
-      // So we just send them to login anyway
-    },
-    complete:() =>{console.log("complete");
-    }
-  })
+        console.log(err, 'err occured');
+      }
+    });
+  } else {
+    this.loginForm.markAllAsTouched();
+  }
   }
 
-  // isloggedin(){
-  //   this.isLoggedin =this.authserv.isLoggedIn()
-  // }
+  get f() { return this.loginForm.controls; }
 }

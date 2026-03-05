@@ -1,6 +1,52 @@
-<p>book-details works!</p>
-<p>{{id}}</p>
-<p>{{userdata| json}} </p>
+<div class="details-wrapper">
+  @if (isloading) {
+    <app-loading-spinner></app-loading-spinner>
+  } 
+  @else if (bookData) {
+    <div class="book-detail-container">
+      <button (click)="backtolist()" class="back"> back</button>
+      <div class="book-main-header">
+        <h1>{{ bookData.title }}</h1>
+        <div class="isbn-sub">ISBN: {{ bookData.isbn }} | Category: {{ bookData.category || 'N/A' }}</div>
+      </div>
 
-<button (click)="getVAlibilitybyid()">see book details</button>
+      <div class="book-info-grid">
+        
+        <div class="info-left">
+          <div class="detail-item">
+            <h3>Description</h3>
+            <p>{{ bookData.body }}</p>
+          </div>
+          
+          <div class="detail-item">
+            <h3>Publication History</h3>
+            <p>Published on {{ bookData.publishedDate| date:'longDate' }}</p>
+            <p>Added by {{ bookData.addedBy }} on {{ bookData.addedDate | date:'short' }}</p>
+          </div>
+        </div>
 
+        <div class="info-right">
+          <div class="detail-item">
+            <h3>Inventory Status</h3>
+            <div class="availability-pill" [ngClass]="bookData.availableCopies > 0 ? 'in-stock' : 'out-of-stock'">
+              {{ bookData.availableCopies > 0 ? 'Available' : 'Currently Unavailable' }}
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <h3>Copies Breakdown</h3>
+            <p><strong>Total:</strong> {{ bookData.totalCopies }}</p>
+            <p><strong>Available:</strong> {{ bookData.availableCopies }}</p>
+            <p><strong>On Loan:</strong> {{ bookData.issuedCopies }}</p>
+          </div>
+<!-- 
+          <button class="action-btn" [disabled]="bookData.availableCopies === 0" (click)="getVAlibilitybyid()">
+            {{ bookData.availableCopies > 0 ? 'Borrow Book' : 'Join Waitlist' }}
+          </button> -->
+        </div>
+
+      </div>
+      </div>
+
+      }
+    </div>

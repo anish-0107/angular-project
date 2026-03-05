@@ -1,9 +1,59 @@
-<p>register works!</p>
-<input type="text" placeholder="enter full name" [(ngModel)]="fullName">
-<input type="text" placeholder="enter user name" [(ngModel)]="user">
-<input type="password" placeholder="enyer passwprd" [(ngModel)]="password">
-<p>{{password}}</p>
-<input type="text" placeholder="email" [(ngModel)]="email">
-<input type="text" placeholder="address" [(ngModel)]="address">
-<input type="text" placeholder="phone" [(ngModel)]="phone">
-<button (click)="registor()">registor</button>
+<div class="register-container" [formGroup]="registerForm">
+  <p class="title">Registration Form</p>
+
+  <div class="field">
+    <input type="text" placeholder="enter full name" formControlName="fullName">
+    @if(f['fullName'].touched && f['fullName'].errors?.['required']){
+      <small class="err">Full name is required</small>
+    }
+  </div>
+
+  <div class="field">
+    <input type="text" placeholder="enter user name" formControlName="user">
+    @if(f['user'].touched && f['user'].errors?.['required']){
+      <small class="err">Username required</small>
+    }
+    @else if(f['user'].touched && f['user'].errors?.['minlength']){
+      <small class="err">Username too short (min 4)</small>
+    }
+    
+  </div>
+
+  <div class="field">
+    <input type="password" placeholder="enter password" formControlName="password">
+    @if(f['user'].touched && f['user'].errors?.['required']){
+      <small class="err">Password required</small>
+    }
+    @if(f['password'].touched && f['password'].errors?.['minlength']){
+      <small class="err">Password must be 6+ characters</small>
+    }
+  </div>
+
+  <div class="field">
+    <input type="text" placeholder="email" formControlName="email">
+    @if(f['user'].touched && f['user'].errors?.['required']){
+      <small class="err">Email required</small>
+    }
+    @if(f['email'].touched && f['email'].errors?.['email']){
+      <small class="err">Invalid email format</small>
+    }
+  </div>
+
+  <div class="field">
+    <input type="text" placeholder="address" formControlName="address">
+  </div>
+
+  <div class="field">
+    <input type="text" placeholder="phone" formControlName="phone">
+    @if(f['user'].touched && f['user'].errors?.['required']){
+      <small class="err">Phone num required</small>
+    }
+    @if(f['phone'].touched && f['phone'].errors?.['pattern']){
+      <small class="err">Numbers only please</small>
+    }
+  </div>
+
+  <button (click)="registor()">Register</button>
+  
+  <p class="preview">Password preview: {{ registerForm.get('password')?.value }}</p>
+</div>

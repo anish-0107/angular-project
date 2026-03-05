@@ -1,48 +1,50 @@
-@if(currentrole == 'user'){
-<div class="card-container">
-    <div class="card">
+@if(currentrole === "librarian") {
+<div class="book-card-wrapper" *appRoleDirective=" 'librarian' ">
+    <div class="book-card admin-mode">
         <div class="card-header">
-            <h3>{{Book.title}}</h3>
-            <span class="book-id">ID: {{Book.id}}</span>
+            <div class="header-main">
+                <h3 class="book-title">{{Book.title}}</h3>
+                <span class="book-id-badge">#{{Book.id}}</span>
+            </div>
         </div>
-        <p class="book-body">{{Book.body}}</p>  
-        <button (click)="borowBook()">borrow book</button> 
+        
+        <div class="card-body">
+            <p class="book-description">{{Book.body | truncate }}</p>
+            
+            <div class="inventory-status">
+                <span class="status-label">Availability</span>
+                <div class="status-bar-container">
+                    <span class="status-text"><strong>{{Book.availableCopies}}</strong> / {{Book.totalCopies}} Copies</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer admin-actions">
+            <button class="btn btn-outline-danger" (click)="deleteme()">Delete</button>
+            <button class="btn btn-admin-edit" (click)="onUpdateCliked()">Edit Book</button>
+        </div>
     </div>
 </div>
 }
 
-
-@else {
-<div class="card-container">
-    <div class="card admin-border">
+@else{
+<div class="book-card-wrapper">
+    <div class="book-card">
         <div class="card-header">
-            <h3>{{Book.title}}</h3>
-            <span class="book-id">ID: {{Book.id}}</span>
+            <div class="header-main">
+                <h3 class="book-title">{{Book.title}}</h3>
+                <span class="book-id-badge">#{{Book.id}}</span>
+            </div>
         </div>
-        <p class="book-body">{{Book.body | truncate }}</p>
-        <div class="admin-info">
-            <strong>Copies:</strong> {{Book.totalCopies}}
+        
+        <div class="card-body">
+            <p class="book-description">{{Book.body | truncate}}</p>
         </div>
-        <div class="actions">
-            <button class="btn btn-delete" (click)="deleteme()">Delete</button>
-            <button class="btn btn-edit" (click)="showupdate()">Edit Book</button>
+
+        <div class="card-footer">
+            <button class="btn btn-secondary" (click)="showdetails()">Details</button>
+            <button class="btn btn-primary" (click)="borrowid()">Borrow Book</button>
         </div>
     </div>
-</div>
-}
-
-@if(isShown){
-<div class="form-overlay">
-    <form class="update-form">
-        <h2>Update Book</h2>
-        <input type="text" placeholder="Title" [(ngModel)]="title" name="title">
-        <input type="text" placeholder="Body" [(ngModel)]="body" name="body">
-        <input type="text" placeholder="Category" [(ngModel)]="category" name="category">
-        <input type="text" placeholder="ISBN" [(ngModel)]="isbn" name="isbn">
-        <input type="number" placeholder="Total Copies" [(ngModel)]="totalCopies" name="totalCopies">
-        <input type="date" [(ngModel)]="publishedyear" name="publishedyear">
-        <button class="btn btn-update" (click)="updatebook()">Update Book</button>
-    </form>
-    <button (click)="showupdate()">exit</button>
 </div>
 }

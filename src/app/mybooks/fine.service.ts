@@ -7,7 +7,7 @@ import { Issue } from '../models/issue-model';
   providedIn: 'root',
 })
 export class FineDService {
-  private apiURl ="http://loaclhost:3001/api/fines"
+  private apiURl ="http://localhost:3001/api/fines"
 
   private http = inject(HttpClient)
 

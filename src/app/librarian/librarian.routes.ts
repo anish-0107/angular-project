@@ -8,27 +8,23 @@ import { authGuardGuard } from "../auth/guards/auth-guard-guard";
 export const lib_ROUTES: Routes =[
 
     {
-        path:'dashboard' ,
+        path:'dashboard' ,canActivate:[authGuardGuard,librarianGuard],
         loadComponent:() => import('./dashboard/dashboard-compo/dashboard-compo').then(m => m.DashboardCompo)
     },
     {
-        path:'manage',
-        loadComponent:() => import('./manage-book/book-list/book-list') .then(m => m.BookList),
-        canActivate:[librarianGuard]
+        path:'book-list',canActivate:[authGuardGuard,librarianGuard],
+        loadComponent:() => import('./manage-book/book-list-lib/book-list') .then(m => m.BookListLib),
     },
     {
-        path:'add',
+        path:'add',canActivate:[authGuardGuard,librarianGuard],
         loadComponent:() => import('./manage-book/book-form/book-form') .then(m => m.BookForm),
-        canActivate:[librarianGuard]
     },
     {
-        path:'list',
+        path:'user-list',canActivate:[authGuardGuard,librarianGuard],
         loadComponent:() => import('./mange_users/user-list/user-list') .then(m => m.UserList),
-        canActivate:[librarianGuard]
     },
     {
-        path:'list/:id',
+        path:'user-details/:id',canActivate:[librarianGuard],
         loadComponent:() => UserList,
-        canActivate:[librarianGuard]
     }
 ]

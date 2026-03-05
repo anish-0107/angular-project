@@ -148,3 +148,20 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.error-container {
+  margin-top: 4px;
+  min-height: 18px; /* Prevents layout jumping when error appears */
+}
+
+.error-text {
+  color: #dc3545; /* Professional red color */
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: block;
+}
+
+/* Optional: Highlight input border red when invalid */
+input.ng-invalid.ng-touched {
+  border-color: #dc3545 !important;
+}

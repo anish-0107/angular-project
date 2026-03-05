@@ -1,13 +1,17 @@
-import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, output, Output, SimpleChanges } from '@angular/core';
 import { Book } from '../../models/book-model';
 import { BookService } from '../book.service';
 import { FormsModule } from '@angular/forms';
 import { IssueService } from '../../mybooks/issue.service';
 import {  TruncatePipe } from '../../shared/truncate';
+import { ConfirmDialog } from "../../shared/confirm-dialog/confirm-dialog";
+import { CommonModule } from '@angular/common';
+import { HighlightDirective } from "../../shared/highlight.directive";
+import { RoleDirective } from '../../shared/role-directive';
 
 @Component({
   selector: 'app-book-card',
-  imports: [FormsModule, TruncatePipe],
+  imports: [FormsModule, CommonModule, TruncatePipe,RoleDirective],
   templateUrl: './book-card.html',
   styleUrl: './book-card.css',
 })
@@ -15,13 +19,13 @@ export class BookCard {
 
   @Input() Book!:Book
   @Output() remove = new EventEmitter<number>()
+  @Output() detailsclicked = new EventEmitter<number>()
+  @Output() updateClicked = new EventEmitter<Book>()
+  @Output() borrowclicked = new EventEmitter<number>()
 
   public currentrole =localStorage.getItem('role')
 
   book:Book[] =[]
-
-  private bookserv = inject(BookService)
-  private issuserv = inject(IssueService)
 
   title:string =''
   body:string=''
@@ -31,41 +35,34 @@ export class BookCard {
   totalCopies:number=0
 
   isShown:boolean = false
-
-  showupdate(){
-    this.isShown=!this.isShown
-  }
+  showPopup = false;
+  message!:string
 
   deleteme(){
     this.remove.emit(this.Book.id)
+    this.showPopup =true
+    console.log(this.remove,"this is emiiited");
   }
 
-  updatebook(){
-
-    const updatedbook ={
-      title:this.title,
-      body:this.body,
-      isbn:this.isbn,
-      category:this.category,
-      publishedYear:this.publishedyear,
-      totalCopies:this.totalCopies,
+  borrowid(){
+    if(this.Book){
+      this.borrowclicked.emit(this.Book.id)
+      console.log(this.Book);
     }
-    this.bookserv.updateBook(updatedbook,this.Book.id).subscribe({
-      next:(data) =>{
-        console.log("book updated", data);
-      }
-    })
   }
 
-  borowBook(){
-    this.issuserv.borrowBook(this.Book.id).subscribe({
-      next:(data) =>{
-        console.log(data)  
-    },
-    error:(err) =>{
-      console.log(err,"err");
-    }
-    })
+  
+  confirmBorrow(){
+    this.showPopup = true 
+    this.message="The book dues in 14 days"
+  }
+
+  showdetails(){
+    this.detailsclicked.emit(this.Book.id)
+  }
+
+  onUpdateCliked(){
+    this.updateClicked.emit(this.Book)
   }
 
 }

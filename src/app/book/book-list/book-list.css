@@ -1,17 +1,123 @@
-button{
-    padding: 10px;
-    background-color: aqua;
-    border-radius: 8px;
-    border: none;
-    margin: 5px;
+.inventory-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.card-container {
+.list-header {
+    background: #1B263B; 
+    padding: 40px 20px;
+    margin-bottom: 30px;
+    border-radius: 0 0 20px 20px;
+}
+
+.control-panel {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Search Box Styling */
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: #BDC3C7;
+}
+
+.search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #E0E1DD;
+    box-shadow: 0 0 15px rgba(224, 225, 221, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+}
+
+/* Filter Styling */
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    color: #E0E1DD;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    background: #E0E1DD;
+    color: #1B263B;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* The Grid System */
+.book-grid {
     display: grid;
-    /* This creates exactly 3 equal columns */
-    grid-template-columns: 1fr 1fr 1fr; 
+    /* This creates a fluid grid that doesn't break on mobile */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
-    padding: 20px;
-    max-width: 1200px; /* Optional: keeps the grid from getting too wide on huge monitors */
-    margin: 0 auto;    /* Centers the whole container */
+}
+
+/* Empty State Styling */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px;
+    background: #fdfdfd;
+    border: 2px dashed #BDC3C7;
+    border-radius: 15px;
+    color: #778DA9;
+    font-size: 1.1rem;
+}
+
+/* Loader Alignment */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .control-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        min-width: 100%;
+    }
 }

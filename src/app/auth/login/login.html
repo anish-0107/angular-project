@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="auth-wrapper">
   <div class="login-card">
     <div class="login-header">
@@ -24,7 +24,66 @@
       </div>
 
       <div class="action-buttons">
+        @if(isLoggedin){
+        
+        }
+        @else{
         <button class="btn-login" (click)="login()">Log In</button>
+
+        }
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="auth-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome Back</h2>
+      <p>Please enter your details to sign in</p>
+    </div>
+
+    <div class="form-container" [formGroup]="loginForm">
+      
+      <div class="input-group">
+        <label>Username</label>
+        <div class="input-wrapper">
+          <span class="icon">👤</span>
+          <input type="text" placeholder="Enter username" formControlName="username">
+        </div>
+        @if (f['username'].touched && f['username'].errors) {
+          @if (f['username'].errors?.['required']) {
+            <div style="color: red; font-size: 12px; margin-top: 5px;">Username is required</div>
+          }
+          @if (f['username'].errors?.['minlength']) {
+            <div style="color: red; font-size: 12px; margin-top: 5px;">Minimum 3 characters required</div>
+          }
+        }
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <span class="icon">🔒</span>
+          <input type="password" placeholder="Enter password" formControlName="password">
+        </div>
+        @if (f['password'].touched && f['password'].errors) {
+          @if (f['password'].errors?.['required']) {
+            <div style="color: red; font-size: 12px; margin-top: 5px;">Password is required</div>
+          }
+          @if (f['password'].errors?.['minlength']) {
+            <div style="color: red; font-size: 12px; margin-top: 5px;">Password must be at least 6 characters</div>
+          }
+        }
+      </div>
+
+      <div class="action-buttons">
+        @if(isLoggedin){
+           <p>Login Successful!</p>
+        }
+        @else{
+          <button class="btn-login" (click)="login()">Log In</button>
+        }
       </div>
     </div>
   </div>

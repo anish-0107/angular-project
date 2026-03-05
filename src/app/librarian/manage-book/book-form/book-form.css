@@ -1,0 +1,78 @@
+/* Center the form on the page */
+form {
+  max-width: 500px;
+  margin: 40px auto;
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Style for all text, number, and date inputs */
+input {
+  background-color: #121212;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 12px 15px;
+  color: #e0e0e0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Focus state: The input "glows" purple when clicked */
+input:focus {
+  border-color: #b39ddb;
+  box-shadow: 0 0 8px rgba(179, 157, 219, 0.2);
+  background-color: #1a1a1a;
+}
+
+/* Special styling for the Date picker icon in dark mode */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8) sepia(100%) saturate(200%) hue-rotate(240deg);
+  cursor: pointer;
+}
+
+/* Placeholder text color */
+input::placeholder {
+  color: #666;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  background-color: #b39ddb; /* Faint Purple */
+  color: #121212;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #d1c4e9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(179, 157, 219, 0.3);
+}
+
+/* Disabled State: When the form is invalid */
+button[type="submit"]:disabled {
+  background-color: #333;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Validation Styling (Optional but recommended) */
+input.ng-invalid.ng-touched {
+  border-color: #7b2d2d; /* Muted Red for errors */
+}

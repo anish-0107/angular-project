@@ -3,6 +3,8 @@ import { AuthService } from '../auth-service';
 import { User } from '../../models/user-model';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { LoadingSpinner } from '../../shared/loading-spinner/loading-spinner';
+import { routes } from '../../app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +19,9 @@ export class Profile implements OnInit {
   }
 
   private authserv= inject(AuthService)
-  private cdr =inject(ChangeDetectorRef)
-  userdata!:User
+  private cdr = inject(ChangeDetectorRef)
+  private route = inject(Router) 
+   userdata!:User
 
   getprofile(){
     this.authserv.profile().subscribe({
@@ -29,5 +32,20 @@ export class Profile implements OnInit {
         this.isloading=false
       }
     })
+  }
+
+    logout(){
+    this.authserv.logout().subscribe({
+      next:(data) =>{
+        console.log("logut success", data); 
+        // return this.route.createUrlTree(["/login"])
+        this.route.navigate(['auth/login'])
+      },
+      error: (err) => {
+      console.error("Logout error (likely expired token)", err);
+    },
+    complete:() =>{console.log("complete");
+    }
+  })
   }
 }

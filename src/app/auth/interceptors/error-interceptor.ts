@@ -1,32 +1,31 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, Observable, throwError } from "rxjs";
+import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
+import { inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { catchError, throwError } from "rxjs";
+import { AuthService } from "../auth-service";
+import { ErrorHandleService } from "../../shared/error-handle/error-handle-service";
 
-@Injectable ()
-export class ErrorInterceptor implements HttpInterceptor{
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-     catchError( err =>{
-      if(err.nmae == "Unauthorized"){
-        const unauthorisedError = new HttpResponse({
-          status:401,
-          statusText:'unathorised access',
-          url:req.url
-        })
-        return throwError(() => unauthorisedError )
+export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
+  // 1. Inject services directly at the top of the function
+  const router = inject(Router);
+  const authService = inject(AuthService);
+  const errorService = inject(ErrorHandleService);
+
+  return next(req).pipe(
+    catchError((err: HttpErrorResponse) => {
+      const backendResponse = err.error.error;
+
+      if (err.status === 401 || err.status === 403 || err.status == 404) {
+        authService.logout();
+        router.navigate(["auth/login"]);
+      } 
+      else if (err.status === 500) {
+        console.log("Critical server error (500) detected.");
       }
 
-      else if(err.name == "forbidden"){
-        const forbiddenError = new HttpResponse({
-          status:403,
-          statusText:'Access Denied',
-          url:req.url
-        })
-        return throwError(() => forbiddenError )
-      }
-      return throwError(() => err)
-     }) 
-    )
-  }
-  
-}
+      errorService.showError(backendResponse);
+
+      return throwError(() => err);
+    })
+  );
+};

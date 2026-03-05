@@ -1,0 +1,115 @@
+/* Container and Spinner Alignment */
+.details-wrapper {
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #e0e0e0;
+}
+
+/* Main Detail Container */
+.book-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Header Section */
+.book-main-header {
+  border-bottom: 2px solid #b39ddb; /* The faint purple accent line */
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.book-main-header h1 {
+  font-size: 2.5rem;
+  color: #b39ddb;
+  margin: 0 0 10px 0;
+}
+
+.isbn-sub {
+  color: #888;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grid Layout for Info */
+.book-info-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2/3 for info, 1/3 for inventory */
+  gap: 40px;
+}
+
+/* Detail Items */
+.detail-item {
+  margin-bottom: 30px;
+}
+
+.detail-item h3 {
+  color: #d1c4e9; /* Lighter purple for section titles */
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  border-left: 3px solid #b39ddb;
+  padding-left: 10px;
+}
+
+.detail-item p {
+  line-height: 1.6;
+  color: #b0b0b0;
+}
+
+/* Availability Pill (Stock Status) */
+.availability-pill {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.in-stock {
+  background-color: rgba(185, 246, 202, 0.1); /* Faint Green */
+  color: #b9f6ca;
+  border: 1px solid #2ecc71;
+}
+
+.out-of-stock {
+  background-color: rgba(255, 138, 128, 0.1); /* Faint Red */
+  color: #ff8a80;
+  border: 1px solid #e74c3c;
+}
+
+/* Breakdown Numbers */
+.info-right .detail-item p {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-right .detail-item strong {
+  color: #b39ddb;
+}
+.back{
+  padding: 7px;
+  border-radius: 5px;
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+/* Responsive Handling */
+@media (max-width: 768px) {
+  .book-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .book-main-header h1 {
+    font-size: 1.8rem;
+  }
+}

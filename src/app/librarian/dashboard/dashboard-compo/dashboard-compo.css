@@ -1,0 +1,128 @@
+/* Dashboard Container */
+.dashboard-container {
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 30px;
+  color: #e0e0e0;
+}
+
+.dashboard-container h2 {
+  color: #b39ddb; /* Faint Purple */
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  border-left: 4px solid #b39ddb;
+  padding-left: 15px;
+}
+
+/* Stats Grid - 4 Columns */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Base Stat Card */
+.stat-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: #b39ddb;
+  transform: translateY(-5px);
+}
+
+/* Card Header */
+.card-header {
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Large Main Value (Circulation) */
+.stat-main-val {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #b39ddb;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  margin-bottom: 10px;
+}
+
+/* Stat Items List */
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+.stat-item:last-of-type {
+  border-bottom: none;
+}
+
+.stat-item span {
+  color: #b0b0b0;
+}
+
+/* Progress Bar Styling */
+.stat-progress {
+  margin-top: 15px;
+}
+
+.stat-progress label {
+  font-size: 0.75rem;
+  color: #b39ddb;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  background-color: #333;
+  height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar div {
+  background: linear-gradient(90deg, #4a3b6b, #b39ddb); /* Purple Gradient */
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(179, 157, 219, 0.4);
+}
+
+/* Color Accents */
+.text-success { color: #b9f6ca !important; } /* Muted Green */
+.text-danger { color: #ff8a80 !important; }  /* Muted Red */
+.text-muted { color: #666 !important; }
+
+/* Special Card Accent for Fines */
+.accent-fines {
+  border-top: 3px solid #ff8a80; /* Subtle red top border for financial alerts */
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #333;
+  margin: 15px 0;
+}
+
+/* Responsive Grid */
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

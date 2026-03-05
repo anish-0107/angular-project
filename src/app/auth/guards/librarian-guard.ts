@@ -9,6 +9,9 @@ export const librarianGuard: CanActivateFn = (route, state) => {
   if(role == "librarian"){
     return true
   }
+  if(state.url == '/book/list'){
+    return true
+  }
   else{
   return router.createUrlTree(['/book/list'])
   }

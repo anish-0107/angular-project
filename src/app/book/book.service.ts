@@ -29,7 +29,7 @@ export class BookService {
   }
 
   getavalablebook(){
-    return this.http.get<Book>(`${this.apiUrl}/api/books/available`).pipe(
+    return this.http.get<Book[]>(`${this.apiUrl}/api/books/available`).pipe(
       catchError(this.handleError)
     )
   }

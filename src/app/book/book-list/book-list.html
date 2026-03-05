@@ -1,18 +1,54 @@
+
 @if(isLoading){
-<app-loading-spinner [IsLoading]="isLoading"></app-loading-spinner>
+<div class="loader-container">
+    <app-loading-spinner [IsLoading]="isLoading"></app-loading-spinner>
+</div>
 }
 @else{
+<header class="list-header">
+    <div class="control-panel">
+        <div class="search-box">
+            <i class="search-icon">🔍</i>
+            <input type="text" [(ngModel)]="searchText" (input)="onSearchChange($event)"
+                placeholder="Search by title or content..." class="search-input">
+        </div>
 
-<select name="filter" id="filter" [(ngModel)]="selectedFilter" (change)="onFilterChange()">
-    <option value="all">All Books</option>
-    <option value="available">In stock books</option>
-</select>
+        <div class="filter-box">
+            <label for="filter" class="filter-label">Status:</label>
+            <select name="filter" id="filter" [(ngModel)]="selectedFilter" (change)="onFilterChange()" class="filter-select">
+                <option value="all">All Library Books</option>
+                <option value="available">In Stock Only</option>
+            </select>
+        </div>
+    </div>
+</header>
 
-@for(b of books; track $index){
-    <div class="card-container">
-<app-book-card [Book]="b" (remove)="handleDelete($event)"></app-book-card>
-</div>
-}@empty {
-<p>noo books available</p>
+<main class="inventory-container">
+    <div class="book-grid">
+        @if(searchText ==''){
+            @for(b of books; track $index){
+                <app-book-card [Book]="b" (detailsclicked)="showdetails($event)" (borrowclicked)="borrowBook($event)" appHighlight></app-book-card>
+            }@empty {
+                <div class="empty-state">
+                    <p>No books available in the library yet.</p>
+                </div>
+            }
+        }
+        @else {
+            @for (book of filteredUsers; track book.id) {
+                <app-book-card [Book]="book" (detailsclicked)="showdetails($event)" (borrowclicked)="borrowBook($event)"></app-book-card>
+            } @empty {
+                <div class="empty-state">
+                    <p>No results found for "<strong>{{ searchText }}</strong>"</p>
+                </div>
+            }
+        }
+    </div>
+</main>
 }
+
+@if(showConfirmBorrow){
+  <app-confirm-dialog [message]=" 'Book due in 14 days'" (confirmed)="onConfirmBorrow()"
+  (cancelled)="closeAllpop()"
+  ></app-confirm-dialog>
 }

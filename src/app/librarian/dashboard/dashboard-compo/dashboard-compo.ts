@@ -3,56 +3,47 @@ import { Book } from '../../../models/book-model';
 import { BookService } from '../../../book/book.service';
 import { BookCard } from '../../../book/book-card/book-card';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { LoadingSpinner } from '../../../shared/loading-spinner/loading-spinner';
+import { User } from '../../../models/user-model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-compo',
-  imports: [BookCard],
+  imports: [LoadingSpinner, DatePipe],
   templateUrl: './dashboard-compo.html',
   styleUrl: './dashboard-compo.css',
 })
-export class DashboardCompo implements OnInit {
+export class DashboardCompo implements  OnInit {
   ngOnInit(): void {
-    this.showBooks()
+    this.dashdata()
   }
+  private apiurl ="http://localhost:3001/api"
+  private http =inject(HttpClient)
+  private cdr  = inject(ChangeDetectorRef)
 
-  books:Book[]=[]
+  isloading:boolean=true
 
-  isLoading:boolean=true
+  data:any={}
 
-  title: string = ''
-  body: string = ''
-  category: string = ''
-  isbn: string = ''
-  publishedyear: Date = new Date
-  totalCopies: number = 0
-
-    private bookserv = inject(BookService)
-    private cdr = inject(ChangeDetectorRef)
-    private route = inject(Router)
-
-  showBooks() {
-    this.bookserv.getBooks().subscribe({
-      next: (data) => {
-        this.books = data
-        this.isLoading = false;
+  dashdata(){
+    this.http.get<object>(`${this.apiurl}/stats/dashboard`).subscribe({
+      next:(data) =>{
+        this.data=data
+        this.isloading=false
         this.cdr.detectChanges()
-        console.log("books:", data);
+        console.log(data);
       }
     })
   }
 
-    updatebook(id:number){
-    const updatedbook ={
-      title:this.title,
-      body:this.body,
-      isbn:this.isbn,
-      category:this.category,
-      publishedYear:this.publishedyear,
-      totalCopies:this.totalCopies,
-    }
-    this.bookserv.updateBook(updatedbook,id).subscribe({
-      next:(data) =>{
-        console.log("book updated", data);
+  getAllFinesReport(){
+    this.http.get<User>(`${this.apiurl}/fines/report`).subscribe({
+      next:(data)=>{
+        console.log(data);
+      },
+      error:(err)=>{
+        console.log(err);
       }
     })
   }

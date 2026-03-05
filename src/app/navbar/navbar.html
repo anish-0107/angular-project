@@ -1,30 +1,50 @@
-@if(role =="user"){
-<nav>
-    <div class="navbar">
-    <p>Library Manager</p>
-    </div>
-    <div class="links">
-    <a routerLink="book/list">ALL books</a>
-    <!-- <a routerLink="book/pbook/:id"> eachbooksindetails </a> -->
-    <a routerLink="auth/login">Login</a>
-    <a routerLink="auth/profile">Profile</a>
-    <a routerLink="/my-books"> my books</a>
-    <a routerLink="auth/register">register</a>
+<nav class="main-nav">
+  <div class="nav-container">
 
-    </div>
-</nav>
-}
 
-@else{
-<nav>
-    <div class="navbar">
-    <p>Library Manager</p>
+    <div class="nav-links">
+      @if((authserv.userRole$ | async) === 'user') {
+      <div class="brand">
+        <span class="logo-text">Library User</span>
+      </div>
+      <a routerLink="book/list" routerLinkActive="active">All Books</a>
+      <a routerLink="/my-books" routerLinkActive="active">My Collection</a>
+      <div class="nav-divider"></div>
+      @if(userisLoogged){
+      <a routerLink="auth/profile" class="btn-profile">Profile</a>
+      }
+      @else {
+      <a routerLink="auth/login" class="btn-login">Login</a>
+    }
+      }
+
+      @else if ((authserv.userRole$ | async) === 'librarian') {
+      <div class="brand">
+        <span class="logo-text">LibraryManager</span>
+      </div>
+
+<!-- 
+      @if(!adminloggedin){
+      <a routerLink="auth/login" class="btn-login">Login</a>
+      }
+      @else{ -->
+      <a routerLink="librarian/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="librarian/add" routerLinkActive="active">Add Book</a>
+      <a routerLink="librarian/book-list">Catlog</a>
+      <a routerLink="librarian/user-list" routerLinkActive="active">User LIst</a>
+      <div class="nav-divider"></div>
+      <button (click)="adminlogout()" class="logout-btn">Logout</button>
+      }
+  <!-- } -->
+
+      @else {
+      <div class="brand">
+        <span class="logo-text">Library</span>
+      </div>
+      <a routerLink="book/list">Book List</a>
+      <a routerLink="auth/login">Login</a>
+      <a routerLink="auth/register">Registor as User</a>
+      }
     </div>
-    <div class="links">
-        <a routerLink="librarian/dashboard">Dashboard</a>
-    <a routerLink="librarian/add">Add book</a>
-    <a routerLink="librarian/list">User list</a>
-    <a routerLink="auth/login">Login</a>
-    </div>
+  </div>
 </nav>
-}

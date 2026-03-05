@@ -28,7 +28,7 @@ export class IssueService {
     )
   }
 
-  returnBook(id:number){
+  returnBook(id?:number){
     return this.http.put<Issue>(`${this.apiUrl}/${id}/return`,{}).pipe(
     catchError(this.handleError)
     )

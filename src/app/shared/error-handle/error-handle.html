@@ -1,0 +1,9 @@
+@if (errserv.isShown$ | async) {
+  <div class="error-backdrop">
+    <div class="error-modal">
+      <h2>System Error</h2>
+      <p>{{errserv.showmess}}</p>
+      <button class="close-btn" (click)="errserv.close()"> Dismiss </button>
+    </div>
+  </div>
+}

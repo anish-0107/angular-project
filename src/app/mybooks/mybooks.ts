@@ -6,10 +6,13 @@ import { CommonModule, DatePipe, JsonPipe, UpperCasePipe } from '@angular/common
 import { LoadingSpinner } from '../shared/loading-spinner/loading-spinner';
 import { FineDService } from './fine.service';
 import { IssueStatusPipe } from '../shared/overdue-status-pipe';
+import { ConfirmDialog } from '../shared/confirm-dialog/confirm-dialog';
+import { DaysUntil } from '../shared/days.until';
+import { HighlightDirective } from "../shared/highlight.directive";
 
 @Component({
   selector: 'app-mybooks',
-  imports: [DatePipe,LoadingSpinner, CommonModule, IssueStatusPipe],
+  imports: [DatePipe, LoadingSpinner, ConfirmDialog, CommonModule, IssueStatusPipe, DaysUntil, HighlightDirective],
   templateUrl: './mybooks.html',
   styleUrl:'./mybooks.css',
 })
@@ -19,8 +22,14 @@ export class Mybooks implements OnInit {
     this.getIssuedBook()
   }
   public issuedBook:IssuedBookRecord[]=[]
+  showPopUp:boolean= false;
+  booktoReturn:IssuedBookRecord | null = null
   
   isloading:boolean = true
+  showMess:string=''
+
+  userid!:number
+
   private issuserv = inject(IssueService)
   private fineserv = inject(FineDService)
   private cdr = inject(ChangeDetectorRef)
@@ -28,6 +37,7 @@ export class Mybooks implements OnInit {
   getIssuedBook(){
     this.issuserv.getIssuedBook().subscribe({
       next:(data) =>{
+        this.userid = data[0].user.id
         this.issuedBook=data
         this.isloading=false
         this.cdr.detectChanges()
@@ -36,10 +46,22 @@ export class Mybooks implements OnInit {
     })
   }
 
-  returnBook(id:number){
-    this.issuserv.returnBook(id).subscribe({
+  confirmreturn(issue:IssuedBookRecord){
+    this.booktoReturn = issue
+    this.showMess="Are you sure to return book"
+    this.showPopUp=true
+  }
+
+  returnBook(){
+     this.issuserv.returnBook(this.booktoReturn?.id).subscribe({
       next:(data)=>{
         console.log(data);
+        this.showPopUp =false
+        this.booktoReturn = null
+        window.location.reload()
+      },
+      error:(err) =>{
+        console.log(err,"this is error");
       }
     })
   }
@@ -48,6 +70,7 @@ export class Mybooks implements OnInit {
     this.issuserv.renewBook(id).subscribe({
       next:(data) =>{
         console.log(data);
+        window.location.reload()
       }
     })
   }
@@ -58,6 +81,7 @@ export class Mybooks implements OnInit {
         console.log(data);
       }
     })
+    alert("fine paid successfully")
   }
 
   payAllFine(id:number){
@@ -67,5 +91,16 @@ export class Mybooks implements OnInit {
       }
     })
   }
+
+  cnacelreturn(){
+    this.showPopUp = false
+  }
+
+
+currentTab: 'active' | 'history' = 'active';
+
+setTab(tab: 'active' | 'history') {
+  this.currentTab = tab;
+}
 
 }

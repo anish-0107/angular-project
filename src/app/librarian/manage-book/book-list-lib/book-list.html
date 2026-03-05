@@ -1,0 +1,61 @@
+<header class="list-header">
+  <div class="control-panel">
+    <div class="search-box">
+      <i class="search-icon">🔍</i>
+      <input type="text" [(ngModel)]="searchText" (input)="onSearchChange($event)"
+        placeholder="Search by title or content..." class="search-input">
+    </div>
+
+    <div class="filter-box">
+      <label for="filter" class="filter-label">Status:</label>
+      <select name="filter" id="filter" [(ngModel)]="selectedFilter" (change)="onFilterChange()" class="filter-select">
+        <option value="all">All Library Books</option>
+        <option value="available">In Stock Only</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="card-container">
+
+  @if(searchText){
+  @for(book of filteredBooks;track $index){
+  <app-book-card [Book]="book" (updateClicked)="openUpdateForm($event)" (remove)="handleConfirmForAll($event)"
+    appHighlight></app-book-card>
+  }
+  }
+
+  @else{
+  @for(book of books;track $index){
+  <app-book-card [Book]="book" (updateClicked)="openUpdateForm($event)" (remove)="handleConfirmForAll($event)"
+    appHighlight></app-book-card>
+  }
+  }
+</div>
+
+@if (showForm) {
+<div class="form-overlay">
+  <div class="update-form">
+    <h2>Update: {{ title }}</h2>
+
+    <input [(ngModel)]="title" placeholder="Title">
+    <input [(ngModel)]="body" placeholder="Description">
+    <input [(ngModel)]="category" placeholder="Category">
+    <input [(ngModel)]="isbn" placeholder="ISBN">
+    <input type="number" [(ngModel)]="totalCopies" placeholder="Total Copies">
+    <input type="date" [(ngModel)]="publishedyear">
+
+    <div class="actions">
+      <button class="btn btn-update" (click)="submitUpdate()">Save Changes</button>
+      <button class="exit-btn" (click)="showForm = false">Cancel</button>
+    </div>
+  </div>
+</div>
+}
+
+@if (showConfirmPopup) {
+<app-confirm-dialog [message]="'Are you sure you want to delete this book?'" (confirmed)="onConfirmDelete()"
+  (cancelled)="closePopup()">
+</app-confirm-dialog>
+}
+

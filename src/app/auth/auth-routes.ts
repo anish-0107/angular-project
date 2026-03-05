@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { authGuardGuard } from "./guards/auth-guard-guard";
 
 export const Auth_routes:Routes=[
     {
@@ -12,6 +13,7 @@ export const Auth_routes:Routes=[
     },
     {
         path:'profile',
+        canActivate:[authGuardGuard],
         loadComponent:() => import('./profile/profile').then (a=> a.Profile)
     }
 ]

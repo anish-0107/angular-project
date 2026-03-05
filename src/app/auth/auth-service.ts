@@ -12,7 +12,9 @@ export class AuthService {
   private http = inject(HttpClient)
   private apiUrl = "http://localhost:3001"
 
-  private currentUserSubject = new BehaviorSubject<string | null>(null);
+  private currentRoleSubject = new BehaviorSubject<string | null>(localStorage.getItem('role'));
+
+  userRole$ = this.currentRoleSubject.asObservable();
 
   login(username: any, password: string) {
     const credential = {
@@ -25,7 +27,7 @@ export class AuthService {
           localStorage.setItem("token", res.token)
           localStorage.setItem("username", res.user.username)
           localStorage.setItem("role", res.user.role)
-          this.currentUserSubject.next(res.user.username);
+          this.currentRoleSubject.next(res.user.role);
         }
         else {
           console.warn("Server returned 204: Login successful, but no token received.");
@@ -37,16 +39,12 @@ export class AuthService {
   logout() {
   return this.http.post<Token>(`${this.apiUrl}/api/auth/logout`, {}).pipe(
     tap(() => console.log("Server invalidated session")),
-    // catchError(err => {
-    //   console.warn("Server refused logout (token likely expired), clearing local data anyway.");
-    //   // Return an empty observable so the subscribe 'next' still fires
-    //   // return of(null); 
-    // }),
-    // tap(() => {
-    //   localStorage.removeItem("token");
-    //   localStorage.removeItem("username");
-    //   localStorage.removeItem('role');
-    // })
+    tap(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem('role');
+      this.currentRoleSubject.next(null);
+    })
   );
 }
 
@@ -69,13 +67,21 @@ export class AuthService {
     return this.http.post<object>(`${this.apiUrl}/api/auth/register`, cred).pipe(
       tap(res => {
         console.log("registor successfully", res);
-        this.currentUserSubject.next(username);
+        this.currentRoleSubject.next(username);
       })
     )
   }
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token')
+  }
+
+  isAdminLoggedin(){
+    const role = localStorage.getItem("role")
+    if(role == 'librarian'){
+      return true
+    }
+    return false
   }
 
   getToken(): string | null {

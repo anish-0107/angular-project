@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoadingSpinner } from './shared/loading-spinner/loading-spinner';
 import { Mybooks } from './mybooks/mybooks';
 import { authGuardGuard } from './auth/guards/auth-guard-guard';
+import { librarianGuard } from './auth/guards/librarian-guard';
 
 export const routes: Routes = [
     // this meansn array of routes is prsent to loas children
@@ -20,8 +21,9 @@ export const routes: Routes = [
         path: 'my-books', component: Mybooks, canActivate:[authGuardGuard]
     },
     {
-       path:'librarian' ,loadChildren:() => import ('./librarian/librarian.routes').then(m =>m.lib_ROUTES)
+       path:'librarian' ,loadChildren:() => import ('./librarian/librarian.routes').then(m =>m.lib_ROUTES),
+       canActivate:[librarianGuard]
     },
-    { path: '**', redirectTo: 'auth/login' }
+    // { path: '**', redirectTo: 'auth/login' }
 
 ];

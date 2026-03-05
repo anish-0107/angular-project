@@ -1,3 +1,47 @@
-@for(book of books;track $index){
-    <app-book-card [Book]="book"></app-book-card>
+@if(isloading){
+    <app-loading-spinner [IsLoading]="isloading"></app-loading-spinner>
+}
+@else{
+<div class="dashboard-container">
+  <h2>Library Analytics Overview</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="card-header">Books</div>
+      <div class="stat-item"><span>Total Books:</span> <strong>{{data.books.totalBooks}}</strong></div>
+      <div class="stat-item"><span>Available:</span> <strong class="text-success">{{data.books.availableBooks}}</strong></div>
+      <div class="stat-item"><span>Unique Titles:</span> <strong>{{data.books.uniqueTitles}}</strong></div>
+      <div class="stat-progress">
+        <label>Utilization Rate: {{data.books.utilizationRate}}%</label>
+        <div class="progress-bar"><div [style.width.%]="data.books.utilizationRate"></div></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="card-header">Circulation</div>
+      <div class="stat-main-val">{{data.issues.activeIssues}}</div>
+      <div class="stat-label">Active Issues</div>
+      <hr>
+      <div class="stat-item"><span>Total Issued:</span> <strong>{{data.issues.totalIssued}}</strong></div>
+      <div class="stat-item"><span>Returned:</span> <strong>{{data.issues.returnedIssues}}</strong></div>
+      <div class="stat-item"><span>Overdue:</span> <strong class="text-danger">{{data.issues.overdueIssues}}</strong></div>
+    </div>
+
+    <div class="stat-card">
+      <div class="card-header">Users</div>
+      <div class="stat-item"><span>Total Users:</span> <strong>{{data.users.totalUsers}}</strong></div>
+      <div class="stat-item"><span>Active:</span> <strong class="text-success">{{data.users.activeUsers}}</strong></div>
+      <div class="stat-item"><span>Inactive:</span> <strong class="text-muted">{{data.users.inactiveUsers}}</strong></div>
+      <div class="stat-item"><span>Borrowers:</span> <strong>{{data.users.usersWithBooks}}</strong></div>
+    </div>
+
+    <div class="stat-card accent-fines">
+      <div class="card-header">Fines & Revenue</div>
+      <div class="stat-item"><span>Paid:</span> <strong class="text-success">${{data.fines.totalPaidFines}}</strong></div>
+      <div class="stat-item"><span>Unpaid:</span> <strong class="text-danger">${{data.fines.totalUnpaidFines}}</strong></div>
+      <div class="stat-item"><span>Users Penalized:</span> <strong>{{data.fines.usersWithFines}}</strong></div>
+    </div>
+  </div>
+  
+</div>
 }

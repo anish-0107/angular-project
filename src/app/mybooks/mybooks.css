@@ -1,102 +1,129 @@
-.status-badge { font-weight: bold; padding: 4px 8px; border-radius: 4px; }
-.status-red { color: white; background-color: red; }
-.status-yellow { color: black; background-color: yellow; }
-.status-green { color: rgb(58, 90, 58);  }
-
-/* Container Grid */
+/* Container & Layout */
 .issued-books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: #121212; /* Deep Background */
+  min-height: 10vh;
+ 
 }
 
-/* Card Styling */
+/* The "Pay All Fine" Header Button */
+.all-fine {
+  background-color: #B39DDB; /* Faint Purple */
+  color: #121212;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px;
+  margin-left: 550px;
+  transition: background 0.3s ease;
+}
+
+.all-fine:hover {
+  background-color: #9575CD; /* Slightly deeper purple */
+}
+
+/* Individual Book Card */
 .issue-card {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    transition: transform 0.2s ease;
+  background-color: #1E1E1E; /* Card surface */
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 15px;
+  color: #E0E0E0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .issue-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(179, 157, 219, 0.1); /* Subtle purple glow */
 }
 
+/* Text Elements */
 .card-header h3 {
-    margin: 0 0 15px 0;
-    font-size: 1.15rem;
-    color: #1e293b;
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 10px;
+  color: #B39DDB; /* Title in faint purple */
+  margin-top: 0;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
 }
 
 .card-body p {
-    margin: 8px 0;
-    font-size: 0.9rem;
-    color: #64748b;
-    display: flex;
-    justify-content: space-between;
+  font-size: 0.9rem;
+  margin: 8px 0;
 }
 
-.card-body p span {
-    font-weight: 600;
-    color: #475569;
+.card-body span {
+  color: #888; /* Labels in muted grey */
 }
 
-.due-date {
-    margin-top: 12px !important;
-    padding-top: 10px;
-    border-top: 1px dashed #e2e8f0;
-    font-style: italic;
-}
-
-/* Status & Fine Styling */
-.status-badge {
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.btn{
+  background-color: #332944; /* Faint Purple */
+  color: #d0d0d0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px;
+  transition: background 0.3s ease;
 }
 
 .fine-val.has-fine {
-    color: #e74c3c;
-    font-weight: bold;
+  color: #FF5252; /* Bright red only if fine exists */
+  font-weight: bold;
 }
 
-/* Button Group */
+.due-date {
+  font-style: italic;
+  color: #B0B0B0;
+}
+
+/* Action Buttons */
 .card-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: auto; /* Pushes buttons to bottom */
-    padding-top: 15px;
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
 }
 
 .card-actions button {
-    flex: 1;
-    padding: 8px 5px;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.2s;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #B39DDB;
+  background: transparent;
+  color: #B39DDB;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
 }
 
-.btn-return { background: #64748b; color: white; }
-.btn-renew { background: #3b82f6; color: white; }
-.btn-pay { background: #ef4444; color: white; }
-
-.card-actions button:hover {
-    opacity: 0.9;
+/* Return & Renew hover effects */
+.card-actions button:hover:not(:disabled) {
+  background-color: #B39DDB;
+  color: #121212;
 }
 
-/* Loading State */
+/* Special button styles */
+.btn-pay {
+  background-color: #B39DDB !important;
+  color: #121212 !important;
+}
+
+.returned {
+  border-color: #444 !important;
+  color: #666 !important;
+  cursor: not-allowed;
+}
+
+/* Loading Wrapper */
 .loading-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #B39DDB;
 }
+

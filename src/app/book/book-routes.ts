@@ -1,25 +1,25 @@
 import { Routes } from '@angular/router';
 import { librarianGuard } from '../auth/guards/librarian-guard';
+import { authGuardGuard } from '../auth/guards/auth-guard-guard';
 
 export const BOOK_ROUTES: Routes = [
-    // this all route are forwaek to books  eg. book/details
+  // this all route are forwaek to books  eg. book/details
   {
-    path: 'lists', 
+    path: '', pathMatch: 'full',
     loadComponent: () => import('./book-list/book-list').then(m => m.BookList)
   },
   {
-    path: 'details', 
-    loadComponent: () => import('./book-details/book-details').then(m => m.BookDetails)
-    ,canActivate:[librarianGuard]
-  },
-  {path:'list',
-    loadComponent:() => import('./book-list/book-list'). then(a=> a.BookList),
-    canActivate:[librarianGuard]
+    path: 'list',
+    loadComponent: () => import('./book-list/book-list').then(a => a.BookList)
   },
   {
-    path:'pbook/:id',
-    loadComponent: () => import('./book-details/book-details').then(m => m.BookDetails),
-    canActivate:[librarianGuard]
+    path: 'list/:id',
+    canActivate:[authGuardGuard],
+    loadComponent: () => import('./book-details/book-details').then(m => m.BookDetails)
   },
-  
+  // {
+  //   path:'book/:id',
+  //   loadComponent: () => import('./book-details/book-details').then(m => m.BookDetails),
+  // },
+
 ]

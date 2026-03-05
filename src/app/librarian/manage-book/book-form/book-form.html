@@ -1,14 +1,10 @@
-<p>book-form works!</p>
-
-
-<form>
-    <input type="text" placeholder="title" [(ngModel)]="title" name="title">
-    <input type="text" placeholder="body" [(ngModel)]="body" name="body">
-    <input type="text" placeholder="category" [(ngModel)]="category" name="category">
-    <input type="text" placeholder="isnb" [(ngModel)]="isbn" name="isbn">
-    <input type="number" placeholder="totalCopies" [(ngModel)]="totalCopies" name="totalCopies">
-    <input type="date" placeholder="enter name" [(ngModel)]="publishedyear" name="publishedyear">
-    <button (click)="addBook()">Add book</button>
+<form [formGroup]="bookForm" (ngSubmit)="addBook()">
+  <input type="text" placeholder="Title" formControlName="title">
+  <input type="text" placeholder="Body" formControlName="body">
+  <input type="text" placeholder="Category" formControlName="category">
+  <input type="text" placeholder="ISBN" formControlName="isbn">
+  <input type="number" placeholder="Total Copies" formControlName="totalCopies">
+  <input type="date" placeholder="Publish Date" formControlName="publishedyear">
+  
+  <button type="submit" [disabled]="bookForm.invalid">Add Book</button>
 </form>
-
-<!-- <button (click)="showfrom()">add from</button> -->
